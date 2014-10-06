@@ -15,7 +15,8 @@
     "node": ">=0.10.32"
   },
   "dependencies": {
-    "hoek": "2.x.x"
+    "hoek": "2.x.x",
+    "joi": "4.x.x"
   },
   "devDependencies": {
     "lab": "4.x.x"

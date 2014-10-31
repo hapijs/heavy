@@ -1,7 +1,8 @@
 // Load modules
 
-var Lab = require('lab');
+var Code = require('code');
 var Heavy = require('..');
+var Lab = require('lab');
 
 
 // Declare internals
@@ -14,34 +15,37 @@ var internals = {};
 var lab = exports.lab = Lab.script();
 var describe = lab.describe;
 var it = lab.it;
-var expect = Lab.expect;
+var expect = Code.expect;
 
 
 describe('Heavy', { parallel: false }, function () {
 
     it('requires load interval when maxEventLoopDelay is set', function (done) {
 
+        var heavy = new Heavy({ sampleInterval: 0 });
         expect(function () {
 
-            new Heavy({ sampleInterval: 0, maxEventLoopDelay: 10, maxHeapUsedBytes: 0, maxRssBytes: 0 });
+            heavy.policy({ maxEventLoopDelay: 10, maxHeapUsedBytes: 0, maxRssBytes: 0 });
         }).to.throw('Load sample interval must be set to enable load limits');
         done();
     });
 
     it('requires load interval when maxHeapUsedBytes is set', function (done) {
 
+        var heavy = new Heavy({ sampleInterval: 0 });
         expect(function () {
 
-            new Heavy({ sampleInterval: 0, maxEventLoopDelay: 0, maxHeapUsedBytes: 10, maxRssBytes: 0 });
+            heavy.policy({ maxEventLoopDelay: 0, maxHeapUsedBytes: 10, maxRssBytes: 0 });
         }).to.throw('Load sample interval must be set to enable load limits');
         done();
     });
 
     it('requires load interval when maxRssBytes is set', function (done) {
 
+        var heavy = new Heavy({ sampleInterval: 0 });
         expect(function () {
 
-            new Heavy({ sampleInterval: 0, maxEventLoopDelay: 0, maxHeapUsedBytes: 0, maxRssBytes: 10 });
+            heavy.policy({ maxEventLoopDelay: 0, maxHeapUsedBytes: 0, maxRssBytes: 10 });
         }).to.throw('Load sample interval must be set to enable load limits');
         done();
     });
@@ -77,42 +81,60 @@ describe('Heavy', { parallel: false }, function () {
         });
     });
 
-    it('rejects request due to high rss load', function (done) {
+    it('throws when process not started', function (done) {
 
-        var heavy = new Heavy({ sampleInterval: 5, maxRssBytes: 1 });
+        var heavy = new Heavy({ sampleInterval: 5 });
+        var policy = heavy.policy({ maxRssBytes: 1 });
+
+        expect(function () {
+
+            policy.check();
+        }).to.throw('Cannot check load when sampler is not started');
+        done();
+    });
+
+    it('fails check due to high rss load', function (done) {
+
+        var heavy = new Heavy({ sampleInterval: 5 });
+        var policy = heavy.policy({ maxRssBytes: 1 });
+
         heavy.start();
-        expect(heavy.check()).to.equal(true);
+        expect(policy.check()).to.equal(true);
 
         setTimeout(function () {
 
-            expect(heavy.check()).to.equal(false);
+            expect(policy.check()).to.equal(false);
             expect(heavy.load.rss).to.be.above(10000);
             heavy.stop();
             done();
         }, 10);
     });
 
-    it('rejects request due to high heap load', function (done) {
+    it('fails check due to high heap load', function (done) {
 
-        var heavy = new Heavy({ sampleInterval: 5, maxHeapUsedBytes: 1 });
+        var heavy = new Heavy({ sampleInterval: 5 });
+        var policy = heavy.policy({ maxHeapUsedBytes: 1 });
+
         heavy.start();
-        expect(heavy.check()).to.equal(true);
+        expect(policy.check()).to.equal(true);
 
         setTimeout(function () {
 
-            expect(heavy.check()).to.equal(false);
+            expect(policy.check()).to.equal(false);
             expect(heavy.load.heapUsed).to.be.above(0);
             heavy.stop();
             done();
         }, 10);
     });
 
-    it('rejects request due to high event loop delay load', function (done) {
+    it('fails check due to high event loop delay load', function (done) {
 
-        var heavy = new Heavy({ sampleInterval: 1, maxEventLoopDelay: 5 });
+        var heavy = new Heavy({ sampleInterval: 1 });
+        var policy = heavy.policy({ maxEventLoopDelay: 5 });
+
         heavy.start();
 
-        expect(heavy.check()).to.equal(true);
+        expect(policy.check()).to.equal(true);
         expect(heavy.load.eventLoopDelay).to.equal(0);
         setImmediate(function () {
 
@@ -120,7 +142,7 @@ describe('Heavy', { parallel: false }, function () {
 
             setImmediate(function () {
 
-                expect(heavy.check()).to.equal(false);
+                expect(policy.check()).to.equal(false);
                 expect(heavy.load.eventLoopDelay).to.be.above(0);
                 heavy.stop();
                 done();
@@ -128,16 +150,18 @@ describe('Heavy', { parallel: false }, function () {
         });
     });
 
-    it('rejects request due to high event loop delay load (delayed measure)', function (done) {
+    it('fails check due to high event loop delay load (delayed measure)', function (done) {
 
-        var heavy = new Heavy({ sampleInterval: 1, maxEventLoopDelay: 5 });
+        var heavy = new Heavy({ sampleInterval: 1 });
+        var policy = heavy.policy({ maxEventLoopDelay: 5 });
+
         heavy.start();
 
-        expect(heavy.check()).to.equal(true);
+        expect(policy.check()).to.equal(true);
         expect(heavy.load.eventLoopDelay).to.equal(0);
         sleep(10);
 
-        expect(heavy.check()).to.equal(false);
+        expect(policy.check()).to.equal(false);
         expect(heavy.load.eventLoopDelay).to.be.above(0);
         heavy.stop();
         done();
@@ -146,11 +170,13 @@ describe('Heavy', { parallel: false }, function () {
     it('disabled by default', function (done) {
 
         var heavy = new Heavy();
+        var policy = heavy.policy();
+
         heavy.start();
         setImmediate(function () {
 
             expect(heavy.load.rss).to.equal(0);
-            expect(heavy.check()).to.equal(true);
+            expect(policy.check()).to.equal(true);
             heavy.stop();
             done();
         });

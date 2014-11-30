@@ -53,7 +53,7 @@ describe('Heavy', { parallel: false }, function () {
     var sleep = function (msec) {
 
         var start = Date.now();
-        while (Date.now() - start < msec);
+        while (Date.now() - start < msec) {}
     };
 
     it('measures load', function (done) {
@@ -99,11 +99,11 @@ describe('Heavy', { parallel: false }, function () {
         var policy = heavy.policy({ maxRssBytes: 1 });
 
         heavy.start();
-        expect(policy.check()).to.equal(true);
+        expect(policy.check()).to.equal(null);
 
         setTimeout(function () {
 
-            expect(policy.check()).to.equal(false);
+            expect(policy.check().message).to.equal('Server under heavy load (rss)');
             expect(heavy.load.rss).to.be.above(10000);
             heavy.stop();
             done();
@@ -116,11 +116,11 @@ describe('Heavy', { parallel: false }, function () {
         var policy = heavy.policy({ maxHeapUsedBytes: 1 });
 
         heavy.start();
-        expect(policy.check()).to.equal(true);
+        expect(policy.check()).to.equal(null);
 
         setTimeout(function () {
 
-            expect(policy.check()).to.equal(false);
+            expect(policy.check().message).to.equal('Server under heavy load (heap)');
             expect(heavy.load.heapUsed).to.be.above(0);
             heavy.stop();
             done();
@@ -134,7 +134,7 @@ describe('Heavy', { parallel: false }, function () {
 
         heavy.start();
 
-        expect(policy.check()).to.equal(true);
+        expect(policy.check()).to.equal(null);
         expect(heavy.load.eventLoopDelay).to.equal(0);
         setImmediate(function () {
 
@@ -142,7 +142,7 @@ describe('Heavy', { parallel: false }, function () {
 
             setImmediate(function () {
 
-                expect(policy.check()).to.equal(false);
+                expect(policy.check().message).to.equal('Server under heavy load (event loop)');
                 expect(heavy.load.eventLoopDelay).to.be.above(0);
                 heavy.stop();
                 done();
@@ -157,11 +157,11 @@ describe('Heavy', { parallel: false }, function () {
 
         heavy.start();
 
-        expect(policy.check()).to.equal(true);
+        expect(policy.check()).to.equal(null);
         expect(heavy.load.eventLoopDelay).to.equal(0);
         sleep(10);
 
-        expect(policy.check()).to.equal(false);
+        expect(policy.check().message).to.equal('Server under heavy load (event loop)');
         expect(heavy.load.eventLoopDelay).to.be.above(0);
         heavy.stop();
         done();
@@ -176,7 +176,7 @@ describe('Heavy', { parallel: false }, function () {
         setImmediate(function () {
 
             expect(heavy.load.rss).to.equal(0);
-            expect(policy.check()).to.equal(true);
+            expect(policy.check()).to.equal(null);
             heavy.stop();
             done();
         });

@@ -12,7 +12,7 @@
     "memory"
   ],
   "engines": {
-    "node": ">=0.10.32"
+    "node": ">=0.10.40"
   },
   "dependencies": {
     "boom": "2.x.x",
@@ -27,10 +27,5 @@
     "test": "lab -t 100 -a code -L",
     "test-cov-html": "lab -t 100 -a code -L -r html -o coverage.html"
   },
-  "licenses": [
-    {
-      "type": "BSD",
-      "url": "http://github.com/hapijs/heavy/raw/master/LICENSE"
-    }
-  ]
+  "license": "BSD-3-Clause"
 }

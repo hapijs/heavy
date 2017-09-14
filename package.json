@@ -1,7 +1,7 @@
 {
   "name": "heavy",
   "description": "Measure process load",
-  "version": "4.0.4",
+  "version": "5.0.0",
   "repository": "git://github.com/hapijs/heavy",
   "main": "lib/index.js",
   "keywords": [
@@ -12,7 +12,7 @@
     "memory"
   ],
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "dependencies": {
     "boom": "5.x.x",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "code": "4.x.x",
-    "lab": "13.x.x"
+    "lab": "14.x.x"
   },
   "scripts": {
     "test": "lab -t 100 -a code -L",

@@ -1,7 +1,7 @@
 {
   "name": "heavy",
   "description": "Measure process load",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "repository": "git://github.com/hapijs/heavy",
   "main": "lib/index.js",
   "keywords": [
@@ -17,7 +17,7 @@
   "dependencies": {
     "boom": "6.x.x",
     "hoek": "5.x.x",
-    "joi": "11.x.x"
+    "joi": "13.x.x"
   },
   "devDependencies": {
     "code": "5.x.x",

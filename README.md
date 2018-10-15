@@ -6,6 +6,7 @@ Measure process load.
 
 ## Example
 
+```
   const Heavy = require('heavy')
 
   let interval = 1000,
@@ -43,6 +44,6 @@ Measure process load.
   }
 
   logInterval = setInterval(intervalHandler, interval);
-
+```
 
 Lead Maintainer - [Eran Hammer](https://github.com/hueniverse)

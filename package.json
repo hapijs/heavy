@@ -1,28 +1,22 @@
 {
-  "name": "heavy",
+  "name": "@hapi/heavy",
   "description": "Measure process load",
   "version": "6.1.2",
   "repository": "git://github.com/hapijs/heavy",
   "main": "lib/index.js",
-  "keywords": [
-    "process",
-    "load",
-    "measure",
-    "delay",
-    "memory"
-  ],
+  "keywords": ["process", "load", "measure", "delay", "memory"],
   "dependencies": {
-    "boom": "7.x.x",
-    "hoek": "6.x.x",
-    "joi": "14.x.x"
+    "@hapi/boom": "7.x.x",
+    "@hapi/hoek": "6.x.x",
+    "@hapi/joi": "15.x.x"
   },
   "devDependencies": {
-    "code": "5.x.x",
-    "lab": "17.x.x"
+    "@hapi/code": "5.x.x",
+    "@hapi/lab": "18.x.x"
   },
   "scripts": {
-    "test": "lab -t 100 -a code -L",
-    "test-cov-html": "lab -t 100 -a code -L -r html -o coverage.html"
+    "test": "lab -t 100 -a @hapi/code -L",
+    "test-cov-html": "lab -t 100 -a @hapi/code -L -r html -o coverage.html"
   },
   "license": "BSD-3-Clause"
 }

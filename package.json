@@ -1,7 +1,7 @@
 {
   "name": "@hapi/heavy",
   "description": "Measure process load",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "repository": "git://github.com/hapijs/heavy",
   "main": "lib/index.js",
   "keywords": [

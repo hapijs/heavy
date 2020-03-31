@@ -56,6 +56,26 @@ describe('Heavy', () => {
         heavy.stop();
     });
 
+    it('does not measures memory if disabled', async () => {
+
+        const heavy = new Heavy({ sampleInterval: 4, disableMemoryMeasurement: true });
+        heavy.start();
+
+        expect(heavy.load.eventLoopDelay).to.equal(0);
+        sleep(5);
+        await Hoek.wait(0);
+        sleep(5);
+        expect(heavy.load.eventLoopDelay).to.be.above(0);
+
+        await Hoek.wait(0);
+        sleep(5);
+
+        expect(heavy.load.eventLoopDelay).to.be.above(0);
+        expect(heavy.load.heapUsed).to.equal(0);
+        expect(heavy.load.rss).to.equal(0);
+        heavy.stop();
+    });
+
     it('ignores load when sample is zero', () => {
 
         const heavy = new Heavy({ sampleInterval: 0 });

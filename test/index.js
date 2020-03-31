@@ -56,7 +56,7 @@ describe('Heavy', () => {
         heavy.stop();
     });
 
-    it('does not measures memory if disabled', async () => {
+    it('does not measure memory if disabled', async () => {
 
         const heavy = new Heavy({ sampleInterval: 4, disableMemoryMeasurement: true });
         heavy.start();

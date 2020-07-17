@@ -2,7 +2,7 @@
 
 const Code = require('@hapi/code');
 const Heavy = require('..');
-const Hoek = require('@hapi/hoek');
+const Hoek = require('@commercial/hoek');
 const Lab = require('@hapi/lab');
 
 

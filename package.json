@@ -1,8 +1,11 @@
 {
-  "name": "@hapi/heavy",
+  "name": "@commercial/heavy",
   "description": "Measure process load",
   "version": "7.0.0",
   "repository": "git://github.com/hapijs/heavy",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -15,9 +18,9 @@
     "memory"
   ],
   "dependencies": {
-    "@hapi/boom": "9.x.x",
-    "@hapi/hoek": "9.x.x",
-    "@hapi/joi": "17.x.x"
+    "@commercial/boom": "9.x.x",
+    "@commercial/hoek": "9.x.x",
+    "joi": "17.x.x"
   },
   "devDependencies": {
     "@hapi/code": "8.x.x",
@@ -27,5 +30,5 @@
     "test": "lab -t 100 -a @hapi/code -L",
     "test-cov-html": "lab -t 100 -a @hapi/code -L -r html -o coverage.html"
   },
-  "license": "BSD-3-Clause"
+  "license": "SEE LICENSE IN LICENSE.md"
 }

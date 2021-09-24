@@ -1,4 +1,6 @@
-# `new Heavy(options)`
+## Methods
+
+### `new Heavy(options)`
 
 Creates a new heavy instance where:
 
@@ -10,21 +12,21 @@ Creates a new heavy instance where:
 
 Returns a new `Heavy` object.
 
-## `heavy.start()`
+### `heavy.start()`
 
 Starts the sampling operation with `sampleInterval` frequency. When `sampleInterval` is `0`, this operation does nothing.
 
-## `heavy.stop()`
+### `heavy.stop()`
 
 Stops the sampling operation.
 
-## `heavy.check()`
+### `heavy.check()`
 
 Verifies the current process load and throws a [server unavailable](https://hapi.dev/module/boom/api?#boomserverunavailablemessage-data)
 error when any of the configured limits is exceeded. The current process load is assigned to `error.data`.
 When `sampleInterval` is `0`, this operation does nothing.
 
-## `heavy.load`
+### `heavy.load`
 
 Object with the current process load:
 

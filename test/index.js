@@ -122,7 +122,7 @@ describe('Heavy', () => {
 
     it('fails check due to high event loop utilization value', async () => {
 
-        const heavy = new Heavy({ sampleInterval: 1, maxEventLoopUtilization: 0.3 });
+        const heavy = new Heavy({ sampleInterval: 1, maxEventLoopUtilization: 0.1 });
 
         heavy.start();
 

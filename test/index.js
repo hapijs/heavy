@@ -53,7 +53,7 @@ describe('Heavy', () => {
         expect(heavy.load.eventLoopDelay).to.be.above(0);
 
         await Hoek.wait(0);
-        sleep(5);
+        sleep(50);
 
         expect(heavy.load.eventLoopDelay).to.be.above(0);
         expect(heavy.load.eventLoopUtilization).to.be.above(0);

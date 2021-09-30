@@ -53,7 +53,7 @@ describe('Heavy', () => {
         expect(heavy.load.eventLoopDelay).to.be.above(0);
 
         await Hoek.wait(0);
-        sleep(500);
+        sleep(5);
 
         expect(heavy.load.eventLoopDelay).to.be.above(0);
         expect(heavy.load.eventLoopUtilization).to.be.above(0);
@@ -130,7 +130,7 @@ describe('Heavy', () => {
         expect(heavy.load.eventLoopUtilization).to.equal(0);
 
         await Hoek.wait(0);
-        sleep(5);
+        sleep(50);
 
         expect(() => heavy.check()).to.throw('Server under heavy load (event loop utilization)');
         expect(heavy.load.eventLoopUtilization).to.be.above(0);

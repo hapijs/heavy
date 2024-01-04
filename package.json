@@ -1,7 +1,7 @@
 {
   "name": "heavy",
   "description": "Measure process load",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "repository": "git://github.com/hapijs/heavy",
   "engines": {
     "node": ">=6.0.0"
